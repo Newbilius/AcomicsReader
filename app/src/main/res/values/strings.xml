@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Комиксочиталка</string>
+    <string name="pageViewImageView">страница комикса</string>
+    <string name="ratingPlaceholder">Возрастной рейтинг: %s</string>
+    <string name="readedPagesPlaceholder">Прочитано: %s</string>
+    <string name="pagesPlaceholder">Страниц: %s</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="Поиск"
+        yourapp:actionViewClass="android.support.v7.widget.SearchView"
+        yourapp:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="Добавить"
+        yourapp:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/action_info"
+        android:icon="@drawable/ic_info_outline_white_24dp"
+        android:title="О программе и авторе"
+        yourapp:showAsAction="always|collapseActionView" />
+</menu>
