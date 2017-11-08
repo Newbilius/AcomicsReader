@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Комиксочиталка</string>
+    <string name="app_name">Комиксов читалка</string>
     <string name="pageViewImageView">страница комикса</string>
     <string name="ratingPlaceholder">Возрастной рейтинг: %s</string>
     <string name="readedPagesPlaceholder">Прочитано: %s</string>

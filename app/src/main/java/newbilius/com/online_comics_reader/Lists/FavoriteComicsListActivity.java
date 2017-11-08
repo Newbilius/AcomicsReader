@@ -30,7 +30,7 @@ import newbilius.com.online_comics_reader.AdmobConfig;
 import newbilius.com.online_comics_reader.Database.Comics;
 import newbilius.com.online_comics_reader.Database.ComicsDataProvider;
 import newbilius.com.online_comics_reader.Database.DatabaseHelper;
-import newbilius.com.online_comics_reader.InformationActivity;
+import newbilius.com.online_comics_reader.SettingsActivity;
 import newbilius.com.online_comics_reader.Net.BaseUrls;
 import newbilius.com.online_comics_reader.Net.NetHelpers;
 import newbilius.com.online_comics_reader.R;
@@ -58,7 +58,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
 
     private ComicsListAdapter adapter;
     private MenuItem addMenuItem;
-    private MenuItem infoMenuItem;
+    private MenuItem settingsMenuItem;
     private boolean inSearch;
     private String searchText;
     private RuntimeExceptionDao<Comics, Integer> comicsDao;
@@ -111,8 +111,8 @@ public class FavoriteComicsListActivity extends AppCompatActivity
         if (item.getItemId() == addMenuItem.getItemId())
             startActivity(new Intent(this, SearchListActivity.class));
 
-        if (item.getItemId() == infoMenuItem.getItemId())
-            startActivity(new Intent(this, InformationActivity.class));
+        if (item.getItemId() == settingsMenuItem.getItemId())
+            startActivity(new Intent(this, SettingsActivity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -121,7 +121,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.list_menu, menu);
 
         addMenuItem = menu.findItem(R.id.action_add);
-        infoMenuItem = menu.findItem(R.id.action_info);
+        settingsMenuItem = menu.findItem(R.id.action_settings);
 
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
@@ -167,7 +167,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
         if (item.getItemId() == R.id.action_search) {
             inSearch = true;
             addMenuItem.setVisible(false);
-            infoMenuItem.setVisible(false);
+            settingsMenuItem.setVisible(false);
             return true;
         }
         return false;
@@ -178,7 +178,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
         if (item.getItemId() == R.id.action_search) {
             inSearch = false;
             addMenuItem.setVisible(true);
-            infoMenuItem.setVisible(true);
+            settingsMenuItem.setVisible(true);
             changeSearchText();
             return true;
         }

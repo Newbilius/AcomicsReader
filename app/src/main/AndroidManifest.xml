@@ -21,8 +21,8 @@
             android:label="Каталог"
             android:screenOrientation="user" />
         <activity
-            android:name="newbilius.com.online_comics_reader.InformationActivity"
-            android:label="О программе"
+            android:name="newbilius.com.online_comics_reader.SettingsActivity"
+            android:label="Настройки"
             android:screenOrientation="user" />
         <activity
             android:name="newbilius.com.online_comics_reader.Lists.FavoriteComicsListActivity"

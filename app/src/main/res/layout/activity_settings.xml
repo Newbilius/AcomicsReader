@@ -12,17 +12,25 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/cacheSizeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Это приложение - простая читалка комиксов с сайта «Авторский Комикс», изначально написанная для собственного удобства. GIF-комиксы пока не поддерживаются (отображаются без анимации)."
+            android:text="Объём кэша: [...считается...]"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
+
+        <Button
+            android:id="@+id/deleteCacheButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Удалить кэш" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="Реклама в приложение встроена эксперимента ради, не менее 50% денег пойдут в качестве донатов в поддержку сайта."
+            android:layout_marginTop="32dp"
+            android:text="Это приложение - простая читалка комиксов с сайта «Авторский Комикс», изначально написанная для собственного удобства. GIF-комиксы пока не поддерживаются (отображаются без анимации)."
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
 
@@ -67,6 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Сайт «Авторский Комикс»" />
+
 
     </LinearLayout>
 </ScrollView>
