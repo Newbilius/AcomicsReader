@@ -233,7 +233,7 @@ public class ReadingActivity extends AppCompatActivity {
             try {
                 Document doc = Jsoup
                         .connect(url)
-                        .data("ageRestrict", "17")
+                        .data("ageRestrict", "18")
                         .post();
                 Elements image = doc.select("img#mainImage");
                 String imagePath = image.attr("src");

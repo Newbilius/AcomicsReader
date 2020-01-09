@@ -206,7 +206,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
                     //todo два запроса - некрасиво, зато удобно (кхм)
                     Document doc = Jsoup
                             .connect(fullUrl)
-                            .data("ageRestrict", "17")
+                            .data("ageRestrict", "18")
                             .post();
                     String title = doc.select("section#content div#contentMargin h2").text();
                     if (title.toLowerCase().contains("(закончен)"))
@@ -214,7 +214,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
 
                     doc = Jsoup
                             .connect(BaseUrls.BASE_URL + url + 1)
-                            .data("ageRestrict", "17")
+                            .data("ageRestrict", "18")
                             .post();
 
                     String pages = doc.select("span.issueNumber").text();
