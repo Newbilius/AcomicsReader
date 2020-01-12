@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import newbilius.com.online_comics_reader.AdmobConfig;
 import newbilius.com.online_comics_reader.Database.Comics;
 import newbilius.com.online_comics_reader.Database.ComicsDataProvider;
 import newbilius.com.online_comics_reader.Database.DatabaseHelper;
@@ -71,8 +70,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
 
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-        MobileAds.initialize(this, AdmobConfig.AppId);
+        MobileAds.initialize(this, this.getString(R.string.addMobApplicationId));
         adView.setAdListener(new ReadAdListener(adView));
         adView.loadAd(new AdRequest.Builder().build());
 

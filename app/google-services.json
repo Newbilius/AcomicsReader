@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "200313691032",
+    "firebase_url": "test",
+    "project_id": "test",
+    "storage_bucket": "test"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121212212121:android:01d4f12323222332",
+        "android_client_info": {
+          "package_name": "newbilius.com.online_comics_reader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "test",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "newbilius.com.online_comics_reader",
+            "certificate_hash": "test"
+          }
+        },
+        {
+          "client_id": "test",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "test"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "test",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
