@@ -1,5 +1,6 @@
 package newbilius.com.online_comics_reader.Lists;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,14 @@ class ComicsListAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 int pos = (int) view.getTag();
                 comicsOnListClickListener.onClick(getItem(pos));
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                int pos = (int) view.getTag();
+                comicsOnListClickListener.onLongClick(getItem(pos));
+                return true;
             }
         });
         return holder;

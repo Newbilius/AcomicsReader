@@ -80,6 +80,11 @@ public class SearchListActivity extends AppCompatActivity {
                         else
                             NetMessage.showAlertForNetworkNotAvailable(activity);
                     }
+
+                    @Override
+                    public void onLongClick(ComicsListData data) {
+
+                    }
                 },
                 new IOnStatusChangeListener() {
                     @Override

@@ -1,11 +1,13 @@
 package newbilius.com.online_comics_reader.Lists;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
@@ -35,7 +37,9 @@ import newbilius.com.online_comics_reader.Net.NetHelpers;
 import newbilius.com.online_comics_reader.R;
 import newbilius.com.online_comics_reader.ReadAdListener;
 import newbilius.com.online_comics_reader.ReadingActivity;
+import newbilius.com.online_comics_reader.Tools.FirebaseEventsHelper;
 import newbilius.com.online_comics_reader.UI.IComicsOnListClickListener;
+import newbilius.com.online_comics_reader.UI.MessageHelper;
 import newbilius.com.online_comics_reader.UI.NetMessage;
 
 //todo повторы кода :-/
@@ -63,12 +67,17 @@ public class FavoriteComicsListActivity extends AppCompatActivity
     private RuntimeExceptionDao<Comics, Integer> comicsDao;
     private ComicsDataProvider comicsDataProvider;
     private FavoriteComicsListActivity activity;
+    private FirebaseEventsHelper firebaseEventsHelper;
+    private MessageHelper messageHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
+
+        firebaseEventsHelper = new FirebaseEventsHelper(this);
+        messageHelper = new MessageHelper(this);
 
         MobileAds.initialize(this, this.getString(R.string.addMobApplicationId));
         adView.setAdListener(new ReadAdListener(adView));
@@ -89,6 +98,11 @@ public class FavoriteComicsListActivity extends AppCompatActivity
                         else
                             NetMessage.showAlertForNetworkNotAvailable(activity);
                     }
+
+                    @Override
+                    public void onLongClick(ComicsListData data) {
+                        showLongTapMenu(data);
+                    }
                 });
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,6 +113,46 @@ public class FavoriteComicsListActivity extends AppCompatActivity
             }
         });
     }
+
+    String[] longTapMenuItems = new String[]{
+            "Удалить из избранного",
+            "Поделиться"
+    };
+
+    private Comics selectedForLongTapComics;
+
+    private void showLongTapMenu(ComicsListData data) {
+        selectedForLongTapComics = comicsDataProvider.getOrCreateComicsByUrl(data.Url);
+        AlertDialog.Builder backMenuAlertDialogBuilder = new AlertDialog.Builder(this)
+                .setItems(longTapMenuItems, onLongTapMenuClickListener);
+        backMenuAlertDialogBuilder.show();
+    }
+
+    private DialogInterface.OnClickListener onLongTapMenuClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            Comics comics = selectedForLongTapComics;
+            switch (i) {
+                case 0:
+                    comics.Favorite = false;
+                    firebaseEventsHelper.removeFromFavorite(comics.Title);
+                    comicsDao.createOrUpdate(comics);
+                    messageHelper.ShowShortToast("Удалён из избранного");
+                    adapter.reloadData();
+                    break;
+
+                case 1:
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, comics.Title);
+                    intent.putExtra(Intent.EXTRA_TEXT, BaseUrls.BASE_URL + comics.Url);
+                    firebaseEventsHelper.share("comics", BaseUrls.BASE_URL + comics.Url);
+                    startActivity(Intent.createChooser(intent, "Отправить ссылку на комикс"));
+                    break;
+            }
+
+        }
+    };
 
     private void openReadingActivity(ComicsListData data) {
         ReadingActivity.Open(this, data.Url);
