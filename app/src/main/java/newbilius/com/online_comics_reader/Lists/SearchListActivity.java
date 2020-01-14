@@ -2,11 +2,12 @@ package newbilius.com.online_comics_reader.Lists;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -36,7 +37,7 @@ import newbilius.com.online_comics_reader.UI.NetMessage;
 public class SearchListActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerView)
-    android.support.v7.widget.RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     @BindView(R.id.nothingTextView)
     TextView nothingTextView;

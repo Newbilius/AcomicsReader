@@ -1,7 +1,7 @@
 package newbilius.com.online_comics_reader.Lists;
 
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
