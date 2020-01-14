@@ -1,10 +1,16 @@
 package newbilius.com.online_comics_reader.Lists;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.SearchView;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +45,7 @@ import newbilius.com.online_comics_reader.Net.NetHelpers;
 import newbilius.com.online_comics_reader.R;
 import newbilius.com.online_comics_reader.ReadAdListener;
 import newbilius.com.online_comics_reader.ReadingActivity;
+import newbilius.com.online_comics_reader.SimpleComicsReaderApplication;
 import newbilius.com.online_comics_reader.Tools.FirebaseEventsHelper;
 import newbilius.com.online_comics_reader.UI.IComicsOnListClickListener;
 import newbilius.com.online_comics_reader.UI.MessageHelper;
@@ -240,18 +248,48 @@ public class FavoriteComicsListActivity extends AppCompatActivity
 
     private class RefreshDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        NotificationCompat.Builder notificationBuilder;
+        int notificationId = 42;
+        NotificationManager notificationManager;
+        String channelId = "main";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             swipeRefreshLayout.setRefreshing(true);
+
+            Context context = SimpleComicsReaderApplication.getAppContext();
+            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(channelId,
+                        "Уведомления",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            notificationBuilder = new NotificationCompat
+                    .Builder(context, "main")
+                    .setSmallIcon(R.drawable.baseline_refresh_white_24)
+                    .setContentTitle("Обновляем комиксы...");
+
+            notificationBuilder.setContentText("Обновляем комиксы...");
+            notificationManager.notify(notificationId, notificationBuilder.build());
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             List<String> urls = adapter.getCurrentListUrls();
+            int maxCount = urls.size();
+            int counter = 0;
             for (String url : urls) {
+                counter++;
                 String fullUrl = BaseUrls.BASE_URL + url + "about";
                 try {
+                    notificationBuilder.setProgress(maxCount, counter, false);
+                    notificationBuilder.setContentText("Комикс " + counter + " из " + maxCount);
+                    notificationManager.notify(notificationId, notificationBuilder.build());
+
                     Comics comics = comicsDataProvider.getComicsByUrl(url);
                     if (comics == null)
                         continue;
@@ -291,6 +329,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
             super.onPostExecute(aVoid);
             adapter.reloadData();
             swipeRefreshLayout.setRefreshing(false);
+            notificationManager.cancel(notificationId);
         }
     }
 }
