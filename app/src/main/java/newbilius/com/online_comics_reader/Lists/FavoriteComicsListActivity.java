@@ -288,13 +288,14 @@ public class FavoriteComicsListActivity extends AppCompatActivity
                 counter++;
                 String fullUrl = BaseUrls.BASE_URL + url + "about";
                 try {
-                    notificationBuilder.setProgress(maxCount, counter, false);
-                    notificationBuilder.setContentText("Комикс " + counter + " из " + maxCount);
-                    notificationManager.notify(notificationId, notificationBuilder.build());
-
                     Comics comics = comicsDataProvider.getComicsByUrl(url);
                     if (comics == null)
                         continue;
+
+                    notificationBuilder.setProgress(maxCount, counter, false);
+                    notificationBuilder.setContentTitle("Обновляем комикс " + counter + " из " + maxCount);
+                    notificationBuilder.setContentText(comics.Title);
+                    notificationManager.notify(notificationId, notificationBuilder.build());
 
                     //todo два запроса - некрасиво, зато удобно (кхм)
                     Document doc = Jsoup
