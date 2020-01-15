@@ -264,7 +264,8 @@ public class FavoriteComicsListActivity extends AppCompatActivity
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(channelId,
                         "Уведомления",
-                        NotificationManager.IMPORTANCE_DEFAULT);
+                        NotificationManager.IMPORTANCE_LOW);
+                channel.setSound(null, null);
                 notificationManager.createNotificationChannel(channel);
             }
 
@@ -274,6 +275,7 @@ public class FavoriteComicsListActivity extends AppCompatActivity
                     .setContentTitle("Обновляем комиксы...");
 
             notificationBuilder.setContentText("Обновляем комиксы...");
+            notificationBuilder.setSound(null);
             notificationManager.notify(notificationId, notificationBuilder.build());
         }
 
