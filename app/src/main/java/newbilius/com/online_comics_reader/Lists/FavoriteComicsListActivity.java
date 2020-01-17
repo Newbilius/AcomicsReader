@@ -312,7 +312,11 @@ public class FavoriteComicsListActivity extends AppCompatActivity
                             .post();
 
                     String pages = doc.select("span.issueNumber").text();
-                    comics.PagesCount = Integer.valueOf(pages.split("/")[1]);
+                    String[] pagesString = pages.split("/");
+                    if (pagesString.length > 1)
+                        comics.PagesCount = Integer.valueOf(pagesString[1]);
+                    else
+                        comics.PagesCount = 0;
 
                     comicsDao.createOrUpdate(comics);
 
